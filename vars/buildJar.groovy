@@ -1,6 +1,6 @@
 #!/user/bin/env groovy
+import com.example.Docker
 
 def call() {
-    echo 'building the application from inside shared library...'
-    sh 'mvn package'
+    return new Docker(this).buildJar()
 }
