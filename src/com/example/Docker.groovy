@@ -39,7 +39,7 @@ class Docker implements Serializable {
 
     def deployToEC2(String imageName) {
         script.echo "deploying docker image to EC2"
-        def dockerCmd = "docker run -d -p 3080:3080 ${imageName}"
+        def dockerCmd = "docker run -d -p 8080:8080 ${imageName}"
         script.sshagent(['ec2-server-key']) {
             script.sh "ssh -o StrictHostKeyChecking=no ec2-user@18.217.58.32 ${dockerCmd}"
         }
