@@ -10,7 +10,7 @@ class Docker implements Serializable {
     }
 
     def buildJar() {
-        script.echo 'building the application from inside shared library...'
+        script.echo 'building JAR from inside shared library...'
         script.sh 'mvn package'
     }
 
@@ -35,5 +35,14 @@ class Docker implements Serializable {
     def dockerPush(String imageName) {
         script.echo "docker push for $imageName from Docker class..."
         script.sh "docker push $imageName"
+    }
+
+    def deployToEC2(String imageName) {
+        script.echo "deploying docker image to EC2"
+        def dockerCmd = "docker run -d -p 3080:3080 ${imageName}"
+        script.sshagent(['ec2-server-key']) {
+            script.sh "ssh -o StrictHostKeyChecking=no ec2-user@18.217.58.32 ${dockerCmd}"
+        }
+
     }
 }
