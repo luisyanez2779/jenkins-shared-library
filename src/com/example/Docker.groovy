@@ -43,6 +43,5 @@ class Docker implements Serializable {
         script.sshagent(['ec2-server-key']) {
             script.sh "ssh -o StrictHostKeyChecking=no ec2-user@18.217.58.32 ${dockerCmd}"
         }
-
     }
 }
