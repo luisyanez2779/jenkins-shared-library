@@ -39,7 +39,7 @@ class Docker implements Serializable {
 
     def deployToEC2(String imageName) {
         script.echo "deploying docker image with docker compose to EC2 for image ${imageName}"
-        def dockerComposeCmd = "docker compose -f docker-compose.yaml up --detach"
+        def dockerComposeCmd = "docker compose -d -f docker-compose.yaml up"
         script.sshagent(['ec2-server-key']) {
             script.sh "scp docker-compose.yaml ec2-user@18.217.58.32:/home/ec2-user"
             script.sh "ssh -o StrictHostKeyChecking=no ec2-user@18.217.58.32 ${dockerComposeCmd}"
